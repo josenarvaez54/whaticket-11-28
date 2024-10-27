@@ -544,7 +544,7 @@ system_nginx_conf() {
 
 sudo su - root << EOF
 
-cat > /etc/nginx/conf.d/deploybrandx.conf << 'END'
+cat > /etc/nginx/forge-conf/deploybrandx.conf << 'END'
 client_max_body_size 100M;
 END
 
