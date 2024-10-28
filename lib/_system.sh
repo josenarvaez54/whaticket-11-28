@@ -503,9 +503,9 @@ system_nginx_install() {
 
   sleep 2
 
-  sudo su - root <<EOF
-  apt install -y nginx
-  rm /etc/nginx/sites-enabled/default
+  #sudo su - root <<EOF
+  #apt install -y nginx
+  #rm /etc/nginx/sites-enabled/default
 EOF
 
   sleep 2
@@ -544,7 +544,7 @@ system_nginx_conf() {
 
 sudo su - root << EOF
 
-cat > /etc/nginx/conf.d/deploybrandx.conf << 'END'
+cat > /etc/nginx/forge-conf/deploybrandx.conf << 'END'
 client_max_body_size 100M;
 END
 
