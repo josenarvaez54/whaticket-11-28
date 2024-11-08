@@ -329,7 +329,7 @@ system_node_install() {
   wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
   sudo apt-get update -y && sudo apt-get -y install postgresql
   sleep 2
-  sudo timedatectl set-timezone America/Sao_Paulo
+  sudo timedatectl set-timezone America/Porto_Velho
   
 EOF
 
@@ -504,8 +504,8 @@ system_nginx_install() {
   sleep 2
 
   #sudo su - root <<EOF
-  #apt install -y nginx
-  #rm /etc/nginx/sites-enabled/default
+  apt install -y nginx
+  rm /etc/nginx/sites-enabled/default
 EOF
 
   sleep 2
@@ -544,7 +544,7 @@ system_nginx_conf() {
 
 sudo su - root << EOF
 
-cat > /etc/nginx/forge-conf/deploybrandx.conf << 'END'
+cat > /etc/nginx/conf.d/criativa.chat.conf << 'END'
 client_max_body_size 100M;
 END
 
@@ -569,11 +569,11 @@ system_certbot_setup() {
   frontend_domain=$(echo "${frontend_url/https:\/\/}")
 
   sudo su - root <<EOF
-  certbot -m $deploy_email \
+  certbot -m developer@criativa.eti.br \
           --nginx \
           --agree-tos \
           --non-interactive \
-          --domains $backend_domain,$frontend_domain
+          --domains api.criativa.chat,criativa.chat
 
 EOF
 

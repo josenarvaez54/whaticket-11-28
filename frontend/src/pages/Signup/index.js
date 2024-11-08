@@ -35,7 +35,7 @@ const Copyright = () => {
 		<Typography variant="body2" color="textSecondary" align="center">
 			{"Copyright © "}
 			<Link color="inherit" href="#">
-				PLW
+				AtendeChat
 			</Link>{" "}
 		   {new Date().getFullYear()}
 			{"."}
@@ -85,7 +85,7 @@ const SignUp = () => {
 	const initialState = { name: "", email: "", phone: "", password: "", planId: "", };
 
 	const [user] = useState(initialState);
-	const dueDate = moment().add(3, "day").format();
+	const dueDate = moment().add(1, "day").format();
 	const handleSignUp = async values => {
 		Object.assign(values, { recurrence: "MENSAL" });
 		Object.assign(values, { dueDate: dueDate });
@@ -118,7 +118,7 @@ const SignUp = () => {
 			<CssBaseline />
 			<div className={classes.paper}>
 				<div>
-					<img style={{ margin: "0 auto", height: "80px", width: "100%" }} src={logo} alt="Whats" />
+					<center><img style={{ margin: "0 auto", width: "70%" }} src={logo} alt="Logocadastro" /></center>
 				</div>
 				{/*<Typography component="h1" variant="h5">
 					{i18n.t("signup.title")}

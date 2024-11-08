@@ -146,7 +146,7 @@ const Quickemessages = () => {
       const companyId = user.companyId;
       //const searchParam = ({ companyId, userId: user.id });
       const { data } = await api.get("/quick-messages", {
-        params: { searchParam, pageNumber },
+        params: { searchParam, pageNumber, userId: user.id },
       });
 
       dispatch({ type: "LOAD_QUICKMESSAGES", payload: data.records });

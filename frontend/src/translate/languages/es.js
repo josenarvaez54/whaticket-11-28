@@ -170,7 +170,6 @@ const messages = {
 					okAdd: "Añadir",
 					okEdit: "Ahorrar",
 					cancel: "Cancelar",
-					attach: "Anexar Arquivo",
 				},
 			},
 			userModal: {

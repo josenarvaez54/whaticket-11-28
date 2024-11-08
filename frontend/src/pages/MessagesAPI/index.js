@@ -281,7 +281,7 @@ const MessagesAPI = () => {
             <b>Endpoint: </b> {getEndpoint()} <br />
             <b>Método: </b> POST <br />
             <b>Headers: </b> X_TOKEN (token cadastrado) e Content-Type (application/json) <br />
-            <b>Body: </b> {"{ \"number\": \"558599999999\", \"body\": \"Sua mensagem\" }"}
+            <b>Body: </b> {"{ \"number\": \"5551998917243\", \"body\": \"Sua mensagem\" }"}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -304,7 +304,7 @@ const MessagesAPI = () => {
             <b>FormData: </b> <br />
             <ul>
               <li>
-                <b>number: </b> 558599999999
+                <b>number: </b> 5551998917243
               </li>
               <li>
                 <b>medias: </b> arquivo

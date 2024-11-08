@@ -25,7 +25,7 @@ const messages = {
         },
         buttons: {
           submit: "Entrar",
-          register: "Não tem um conta? Cadastre-se!",
+          register: "Registre-se, agora mesmo!",
         },
       },
       plans: {
@@ -284,7 +284,6 @@ const messages = {
           okAdd: "Adicionar",
           okEdit: "Salvar",
           cancel: "Cancelar",
-		  attach: "Anexar Arquivo",
         },
       },
       userModal: {

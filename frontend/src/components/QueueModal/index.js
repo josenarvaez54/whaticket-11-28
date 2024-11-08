@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { toast } from "react-toastify";
-import { head } from "lodash";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
@@ -32,10 +31,9 @@ import {
   Tab,
   Tabs,
 } from "@material-ui/core";
-import { AttachFile, Colorize, DeleteOutline } from "@material-ui/icons";
+import { Colorize } from "@material-ui/icons";
 import { QueueOptions } from "../QueueOptions";
 import SchedulesForm from "../SchedulesForm";
-import ConfirmationModal from "../ConfirmationModal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -97,10 +95,6 @@ const QueueModal = ({ open, onClose, queueId }) => {
   const [schedulesEnabled, setSchedulesEnabled] = useState(false);
   const greetingRef = useRef();
   const [integrations, setIntegrations] = useState([]);
-  const [attachment, setAttachment] = useState(null);
-  const attachmentFile = useRef(null);
-  const [queueEditable, setQueueEditable] = useState(true);
-  const [confirmationOpen, setConfirmationOpen] = useState(false);
 
   const [schedules, setSchedules] = useState([
     { weekday: "Segunda-feira", weekdayEn: "monday", startTime: "08:00", endTime: "18:00", },
@@ -169,6 +163,7 @@ const QueueModal = ({ open, onClose, queueId }) => {
         name: "",
         color: "",
         greetingMessage: "",
+        outOfHoursMessage: "",
         orderQueue: "",
         integrationId: ""
       });
@@ -180,47 +175,16 @@ const QueueModal = ({ open, onClose, queueId }) => {
     setQueue(initialState);
   };
 
-  const handleAttachmentFile = (e) => {
-    const file = head(e.target.files);
-    if (file) {
-      setAttachment(file);
-    }
-  };
-
-  const deleteMedia = async () => {
-    if (attachment) {
-      setAttachment(null);
-      attachmentFile.current.value = null;
-    }
-
-    if (queue.mediaPath) {
-      await api.delete(`/queue/${queue.id}/media-upload`);
-      setQueue((prev) => ({ ...prev, mediaPath: null, mediaName: null }));
-      toast.success(i18n.t("queueModal.toasts.deleted"));
-    }
-  };
-
-
   const handleSaveQueue = async (values) => {
     try {
       if (queueId) {
         await api.put(`/queue/${queueId}`, {
           ...values, schedules, promptId: selectedPrompt ? selectedPrompt : null
         });
-       if (attachment != null) {
-          const formData = new FormData();
-          formData.append("file", attachment);
-          await api.post(`/queue/${queueId}/media-upload`, formData);
-        }
       } else {
         await api.post("/queue", {
           ...values, schedules, promptId: selectedPrompt ? selectedPrompt : null
         });
-       if (attachment != null) {
-          const formData = new FormData();
-          formData.append("file", attachment);
-          await api.post(`/queue/${queueId}/media-upload`, formData);
-        }
       }
       toast.success("Queue saved successfully");
       handleClose();
@@ -241,14 +205,6 @@ const QueueModal = ({ open, onClose, queueId }) => {
 
   return (
     <div className={classes.root}>
-     <ConfirmationModal
-        title={i18n.t("queueModal.confirmationModal.deleteTitle")}
-        open={confirmationOpen}
-        onClose={() => setConfirmationOpen(false)}
-        onConfirm={deleteMedia}
-      >
-        {i18n.t("queueModal.confirmationModal.deleteMessage")}
-      </ConfirmationModal>
       <Dialog
         maxWidth="md"
         fullWidth={true}
@@ -260,13 +216,6 @@ const QueueModal = ({ open, onClose, queueId }) => {
           {queueId
             ? `${i18n.t("queueModal.title.edit")}`
             : `${i18n.t("queueModal.title.add")}`}
-            <div style={{ display: "none" }}>
-            <input
-              type="file"
-              ref={attachmentFile}
-              onChange={(e) => handleAttachmentFile(e)}
-            />
-          </div>
         </DialogTitle>
         <Tabs
           value={tab}
@@ -453,6 +402,7 @@ const QueueModal = ({ open, onClose, queueId }) => {
                           label={i18n.t("queueModal.form.outOfHoursMessage")}
                           type="outOfHoursMessage"
                           multiline
+                          inputRef={greetingRef}
                           rows={5}
                           fullWidth
                           name="outOfHoursMessage"
@@ -469,35 +419,8 @@ const QueueModal = ({ open, onClose, queueId }) => {
                       )}
                     </div>
                     <QueueOptions queueId={queueId} />
-                     {(queue.mediaPath || attachment) && (
-                    <Grid xs={12} item>
-                      <Button startIcon={<AttachFile />}>
-                        {attachment != null
-                          ? attachment.name
-                          : queue.mediaName}
-                      </Button>
-                      {queueEditable && (
-                        <IconButton
-                          onClick={() => setConfirmationOpen(true)}
-                          color="secondary"
-                        >
-                          <DeleteOutline />
-                        </IconButton>
-                      )}
-                    </Grid>
-                  )}
                   </DialogContent>
                   <DialogActions>
-                  {!attachment && !queue.mediaPath && queueEditable && (
-                      <Button
-                        color="primary"
-                        onClick={() => attachmentFile.current.click()}
-                        disabled={isSubmitting}
-                        variant="outlined"
-                      >
-                        {i18n.t("queueModal.buttons.attach")}
-                      </Button>
-                    )}
                     <Button
                       onClick={handleClose}
                       color="secondary"

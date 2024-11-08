@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "1.0.0",
+  "version": "5.4.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,11 +18,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@whiskeysockets/baileys": "github:WhiskeySockets/Baileys",
     "@adiwajshing/keyed-db": "^0.2.4",
-    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+	  "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@hapi/boom": "^9.1.4",
     "@sentry/node": "^6.18.1",
-    "@whiskeysockets/baileys": "github:WhiskeySockets/Baileys",
     "bcryptjs": "^2.4.3",
     "bull": "^4.8.2",
     "cookie-parser": "^1.4.6",
@@ -41,6 +41,7 @@
     "mustache": "^4.2.0",
     "mysql2": "^2.2.5",
     "node-cache": "^5.1.2",
+	"node-cron": "^3.0.2",
     "nodemailer": "^6.8.0",
     "openai": "3.3.0",
     "pg": "^8.7.3",
@@ -85,7 +86,6 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^4.0.0",
     "factory-girl": "^5.0.4",
-    "javascript-obfuscator": "^4.1.0",
     "jest": "^27.5.1",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1",

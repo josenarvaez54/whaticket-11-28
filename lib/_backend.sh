@@ -14,15 +14,15 @@ backend_redis_create() {
   sleep 2
 
   sudo su - root <<EOF
-  usermod -aG docker deploybrandx
-  docker run --name redis-${instancia_add} -p ${redis_port}:6379 --restart always --detach redis redis-server --requirepass ${redis_pass}
+  usermod -aG docker root
+  docker run --name redis-criativa.chat -p 5000:6379 --restart always --detach redis redis-server --requirepass 1020304056
 
   sleep 2
   sudo su - postgres <<EOF
-    createdb ${instancia_add};
+    createdb criativa;
     psql
-    CREATE USER ${instancia_add} SUPERUSER INHERIT CREATEDB CREATEROLE;
-    ALTER USER ${instancia_add} PASSWORD '${db_pass}';
+    CREATE USER criativa SUPERUSER INHERIT CREATEDB CREATEROLE;
+    ALTER USER criativa PASSWORD '1020304056';
     \q
     exit
 EOF
@@ -54,29 +54,29 @@ backend_set_env() {
   frontend_url=https://$frontend_url
 
 sudo su - deploybrandx << EOF
-  cat <<[-]EOF > /home/deploybrandx/${instancia_add}/backend/.env
+  cat <<[-]EOF > /home/whatsapp-backend/.env
 NODE_ENV=
-BACKEND_URL=${backend_url}
-FRONTEND_URL=${frontend_url}
+BACKEND_URL=https://api.criativa.chat
+FRONTEND_URL=https://criativa.chat
 PROXY_PORT=443
-PORT=${backend_port}
+PORT=4000
 
 DB_HOST=localhost
 DB_DIALECT=postgres
 DB_PORT=5432
-DB_USER=${instancia_add}
-DB_PASS=${db_pass}
-DB_NAME=${instancia_add}
+DB_USER=criativa
+DB_PASS=1020304056
+DB_NAME=criativa
 
-JWT_SECRET=${jwt_secret}
-JWT_REFRESH_SECRET=${jwt_refresh_secret}
+JWT_SECRET=kZaOTd+YZpjRUyyuQUpigJaEMk4vcW4YOymKPZX0Ts8=
+JWT_REFRESH_SECRET=dBSXqFg9TaNUEDXVp6fhMTRLBysP+j2DSqf7+raxD3A=
 
-REDIS_URI=redis://:${redis_pass}@127.0.0.1:${redis_port}
+REDIS_URI=redis://:1020304056@127.0.0.1:5000
 REDIS_OPT_LIMITER_MAX=1
 REGIS_OPT_LIMITER_DURATION=3000
 
-USER_LIMIT=${max_user}
-CONNECTIONS_LIMIT=${max_whats}
+USER_LIMIT=9999
+CONNECTIONS_LIMIT=9999
 CLOSED_SEND_BY_ME=true
 
 # GERENCIANET_SANDBOX=false
@@ -220,7 +220,7 @@ backend_start_pm2() {
 
   sudo su - root <<EOF
   cd /home/deploybrandx/${instancia_add}/backend
-  pm2 start dist/server.js --name ${instancia_add}-backend
+  pm2 start dist/server.js --name whatsapp-backend
   pm2 save --force
 EOF
 
@@ -242,11 +242,11 @@ backend_nginx_setup() {
   backend_hostname=$(echo "${backend_url/https:\/\/}")
 
 sudo su - root << EOF
-cat > /etc/nginx/sites-available/${instancia_add}-backend << 'END'
+cat > /etc/nginx/sites-available/api.criativa.chat-backend << 'END'
 server {
-  server_name $backend_hostname;
+  server_name api.criativa.chat;
   location / {
-    proxy_pass http://127.0.0.1:${backend_port};
+    proxy_pass http://127.0.0.1:4000;
     proxy_http_version 1.1;
     proxy_set_header Upgrade \$http_upgrade;
     proxy_set_header Connection 'upgrade';
@@ -258,8 +258,9 @@ server {
   }
 }
 END
-ln -s /etc/nginx/sites-available/${instancia_add}-backend /etc/nginx/sites-enabled
+ln -s /etc/nginx/sites-available/api.criativa.chat-backend /etc/nginx/sites-enabled
 EOF
 
   sleep 2
 }
+whatsapp-frontend

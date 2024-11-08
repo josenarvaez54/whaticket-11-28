@@ -88,17 +88,17 @@ frontend_set_env() {
   backend_url=https://$backend_url
 
 sudo su - deploybrandx << EOF
-  cat <<[-]EOF > /home/deploybrandx/${instancia_add}/frontend/.env
-REACT_APP_BACKEND_URL=${backend_url}
+  cat <<[-]EOF > /home/whatsapp-frontend/.env
+REACT_APP_BACKEND_URL=https://api.criativa.chat
 REACT_APP_HOURS_CLOSE_TICKETS_AUTO = 24
-REACT_APP_TITLE = "ConectaZap"
+REACT_APP_TITLE = "Criativa Chat"
 [-]EOF
 EOF
 
   sleep 2
 
 sudo su - deploybrandx << EOF
-  cat <<[-]EOF > /home/deploybrandx/${instancia_add}/frontend/server.js
+  cat <<[-]EOF > /home/whatsapp-frontend/server.js
 //simple express server to run frontend production build;
 const express = require("express");
 const path = require("path");
@@ -107,7 +107,7 @@ app.use(express.static(path.join(__dirname, "build")));
 app.get("/*", function (req, res) {
 	res.sendFile(path.join(__dirname, "build", "index.html"));
 });
-app.listen(${frontend_port});
+app.listen(3000);
 
 [-]EOF
 EOF
@@ -128,8 +128,8 @@ frontend_start_pm2() {
   sleep 2
 
   sudo su - root <<EOF
-  cd /home/deploybrandx/${instancia_add}/frontend
-  pm2 start server.js --name ${instancia_add}-frontend
+  cd /home/whatsapp-frontend
+  pm2 start server.js --name whatsapp-frontend
   pm2 save --force
 EOF
 
@@ -137,7 +137,7 @@ EOF
   
   sudo su - root <<EOF
    pm2 startup
-  sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u deploybrandx --hp /home/deploybrandx
+  sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd --hp /home
 EOF
   sleep 2
 }
@@ -158,12 +158,12 @@ frontend_nginx_setup() {
 
 sudo su - root << EOF
 
-cat > /etc/nginx/sites-available/${instancia_add}-frontend << 'END'
+cat > /etc/nginx/sites-available/criativa.chat-frontend << 'END'
 server {
-  server_name $frontend_hostname;
+  server_name criativa.chat;
 
   location / {
-    proxy_pass http://127.0.0.1:${frontend_port};
+    proxy_pass http://127.0.0.1:3000;
     proxy_http_version 1.1;
     proxy_set_header Upgrade \$http_upgrade;
     proxy_set_header Connection 'upgrade';
@@ -176,7 +176,7 @@ server {
 }
 END
 
-ln -s /etc/nginx/sites-available/${instancia_add}-frontend /etc/nginx/sites-enabled
+ln -s /etc/nginx/sites-available/criativa.chat-frontend /etc/nginx/sites-enabled
 EOF
 
   sleep 2
