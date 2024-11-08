@@ -16,7 +16,7 @@ const credentials = {key: privatekey, cert: certifcate};
 
 const server = https.createServer(credentials, app);
 
-server.listen(process.env.PORT, async () => {
+server.listen(parseInt(process.env.PORT), process.env.HOST, async () => {
   const companies = await Company.findAll();
   const allPromises: any[] = [];
   companies.map(async c => {
