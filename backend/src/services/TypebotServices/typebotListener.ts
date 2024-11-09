@@ -49,7 +49,10 @@ const typebotListener = async ({
 
             const reqData = JSON.stringify({
                 "isStreamEnabled": true,
-                "message": "string",
+                "message": {
+									"type": "text",
+									"text": "start"
+								},
                 "resultId": "string",
                 "isOnlyRegistering": false,
                 "prefilledVariables": {

@@ -20,7 +20,10 @@ const typebotListener = async ({ wbot, msg, ticket, typebot }) => {
             const id = Math.floor(Math.random() * 10000000000).toString();
             const reqData = JSON.stringify({
                 "isStreamEnabled": true,
-                "message": "string",
+                "message": {
+                    "type": "text",
+                    "text": "start"
+                },
                 "resultId": "string",
                 "isOnlyRegistering": false,
                 "prefilledVariables": {
