@@ -93,7 +93,8 @@ const initWASocket = async (whatsapp) => {
                 wsocket = (0, baileys_1.default)({
                     logger: loggerBaileys,
                     printQRInTerminal: false,
-                    browser: baileys_1.Browsers.appropriate("Desktop"),
+                    //browser: Browsers.appropriate("Desktop"),
+                    browser: baileys_1.Browsers.macOS("Desktop"),
                     syncFullHistory: true,
                     auth: {
                         creds: state.creds,

@@ -99,7 +99,8 @@ export const initWASocket = async (whatsapp: Whatsapp): Promise<Session> => {
         wsocket = makeWASocket({
           logger: loggerBaileys,
           printQRInTerminal: false,
-          browser: Browsers.appropriate("Desktop"),
+          //browser: Browsers.appropriate("Desktop"),
+					browser: Browsers.macOS("Desktop"),
 					syncFullHistory: true,
           auth: {
             creds: state.creds,
