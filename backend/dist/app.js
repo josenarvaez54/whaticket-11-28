@@ -49,6 +49,8 @@ app.use((0, cors_1.default)({
     credentials: true,
     origin: process.env.FRONTEND_URL
 }));
+app.use(express_1.default.json({ limit: '50mb' }));
+app.use(express_1.default.urlencoded({ limit: '50mb' }));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
 app.use(Sentry.Handlers.requestHandler());
