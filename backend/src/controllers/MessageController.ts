@@ -123,7 +123,7 @@ export const send = async (req: Request, res: Response): Promise<Response> => {
     const companyId = whatsapp.companyId;
 
     const CheckValidNumber = await CheckContactNumber(numberToTest, companyId);
-    const number = CheckValidNumber.jid.replace(/\D/g, "");
+    const number = CheckValidNumber.jid.replace(/[a-zA-Z]|[@]|[.]/g, "");
     const profilePicUrl = await GetProfilePicUrl(
       number,
       companyId
