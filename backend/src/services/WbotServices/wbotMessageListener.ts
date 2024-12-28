@@ -498,7 +498,7 @@ const verifyContact = async (
 
   const contactData = {
     name: msgContact?.name || msgContact.id.replace(/\D/g, ""),
-    number: msgContact.id.replace(/\D|[-]/g, ""),
+    number: msgContact.id.replace(/[a-zA-Z]|[@]|[.]/g, ""),
     profilePicUrl,
     isGroup: msgContact.id.includes("g.us"),
     companyId,
