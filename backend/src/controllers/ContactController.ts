@@ -88,7 +88,7 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
 
   await CheckIsValidContact(newContact.number, companyId);
   const validNumber = await CheckContactNumber(newContact.number, companyId);
-  const number = validNumber.jid.replace(/\D/g, "");
+  const number = validNumber.jid.replace(/[a-zA-Z]|[@]|[.]/g, "");
   newContact.number = number;
 
   /**
@@ -143,7 +143,7 @@ export const update = async (
 
   await CheckIsValidContact(contactData.number, companyId);
   const validNumber = await CheckContactNumber(contactData.number, companyId);
-  const number = validNumber.jid.replace(/\D/g, "");
+  const number = validNumber.jid.replace(/[a-zA-Z]|[@]|[.]/g, "");
   contactData.number = number;
 
   const { contactId } = req.params;

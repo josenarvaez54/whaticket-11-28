@@ -422,7 +422,7 @@ const getSenderMessage = (
 
 const getContactMessage = async (msg: proto.IWebMessageInfo, wbot: Session) => {
   const isGroup = msg.key.remoteJid.includes("g.us");
-  const rawNumber = msg.key.remoteJid.replace(/\D/g, "");
+  const rawNumber = msg.key.remoteJid.replace(/[a-zA-Z]|[@]|[.]/g, "");
   return isGroup
     ? {
       id: getSenderMessage(msg, wbot),
@@ -2162,7 +2162,7 @@ const verifyRecentCampaign = async (
   companyId: number
 ) => {
   if (!message.key.fromMe) {
-    const number = message.key.remoteJid.replace(/\D/g, "");
+    const number = message.key.remoteJid.replace(/[a-zA-Z]|[@]|[.]/g, "");
     const campaigns = await Campaign.findAll({
       where: { companyId, status: "EM_ANDAMENTO", confirmation: true },
     });
