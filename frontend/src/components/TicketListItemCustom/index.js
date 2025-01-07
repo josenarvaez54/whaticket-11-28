@@ -415,7 +415,7 @@ const useStyles = makeStyles((theme) => ({
                 variant="body2"
                 color="textPrimary"
               >
-                {ticket.contact.name}
+                {ticket.contact.name ? ticket.contact.name : ''}
                 {profile === "admin" && (
                   <Tooltip title="Espiar Conversa">
                     <VisibilityIcon
