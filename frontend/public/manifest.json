@@ -4,8 +4,13 @@
 	"icons": [
 		{
 			"src": "favicon.png",
-			"sizes": "64x64 32x32 24x24 16x16",
-			"type": "image/x-icon"
+			"sizes": "32x32",
+			"type": "image/png"
+		},
+		{
+			"src": "favicon-16x16.png",
+			"sizes": "16x16",
+			"type": "image/png"
 		},
 		{
 			"src": "/android-chrome-192x192.png",
@@ -19,8 +24,19 @@
 				"purpose": "maskable"
 		}
 	],
-	"start_url": ".",
+	"id": "/login",
+	"start_url": "/login",
 	"display": "standalone",
 	"theme_color": "#1ab394",
-	"background_color": "#ffffff"
+	"background_color": "#ffffff",
+	"screenshots": [    
+   {
+
+     "src": "/maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "CriativaChat"
+    }
+ ]
 }
