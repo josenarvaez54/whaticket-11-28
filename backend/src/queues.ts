@@ -563,6 +563,7 @@ async function handleProcessCampaign(job) {
         `Processar campanha solicitado: Campanha=${campaign.id}; Delay=${campaign.scheduledAt};Confirguração=${settings.messageInterval}`
       );
 
+      /*
       const { contacts } = campaign.contactList;
       if (isArray(contacts)) {
         const contactData = contacts.map(contact => ({
@@ -595,6 +596,7 @@ async function handleProcessCampaign(job) {
         await Promise.all(queuePromises);
         await campaign.update({ status: "EM_ANDAMENTO" });
       }
+      */
     }
   } catch (err: any) {
     Sentry.captureException(err);
@@ -619,6 +621,7 @@ async function handlePrepareContact(job) {
       `Preparar contatos da campanha solicitado: Campanha=${campaignId}; Delay=${delay};Total de mensagem=${messages.length}`
     );
 
+    /*
     if (messages.length) {
       const radomIndex = randomValue(0, messages.length);
       const message = getProcessedMessage(
@@ -680,6 +683,7 @@ async function handlePrepareContact(job) {
     }
 
     await verifyAndFinalizeCampaign(campaign);
+    */
   } catch (err: any) {
     Sentry.captureException(err);
     logger.error(`campaignQueue -> PrepareContact -> error: ${err.message}`);
@@ -712,6 +716,7 @@ async function handleDispatchCampaign(job) {
       `Disparo de campanha solicitado: Campanha=${campaignId};Registro=${campaignShippingId}`
     );
 
+    /*
     const campaignShipping = await CampaignShipping.findByPk(
       campaignShippingId,
       {
@@ -772,9 +777,10 @@ async function handleDispatchCampaign(job) {
       action: "update",
       record: campaign
     });
+    */
 
     logger.info(
-      `Campanha enviada para: Campanha=${campaignId};Contato=${campaignShipping.contact.name}`
+      `Campanha enviada para: Campanha=${campaignId};Contato={campaignShipping.contact.name}`
     );
   } catch (err: any) {
     Sentry.captureException(err);
