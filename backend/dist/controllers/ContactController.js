@@ -79,7 +79,7 @@ const store = async (req, res) => {
     }
     await (0, CheckIsValidContact_1.default)(newContact.number, companyId);
     const validNumber = await (0, CheckNumber_1.default)(newContact.number, companyId);
-    const number = validNumber.jid.replace(/\D/g, "");
+    const number = validNumber.jid.replace(/[a-zA-Z]|[@]|[.]/g, "");
     newContact.number = number;
     /**
      * Código desabilitado por demora no retorno
@@ -120,7 +120,7 @@ const update = async (req, res) => {
     }
     await (0, CheckIsValidContact_1.default)(contactData.number, companyId);
     const validNumber = await (0, CheckNumber_1.default)(contactData.number, companyId);
-    const number = validNumber.jid.replace(/\D/g, "");
+    const number = validNumber.jid.replace(/[a-zA-Z]|[@]|[.]/g, "");
     contactData.number = number;
     const { contactId } = req.params;
     const contact = await (0, UpdateContactService_1.default)({

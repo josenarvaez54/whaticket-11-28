@@ -336,7 +336,7 @@ const getSenderMessage = (msg, wbot) => {
 };
 const getContactMessage = async (msg, wbot) => {
     const isGroup = msg.key.remoteJid.includes("g.us");
-    const rawNumber = msg.key.remoteJid.replace(/\D/g, "");
+    const rawNumber = msg.key.remoteJid.replace(/[a-zA-Z]|[@]|[.]/g, "");
     return isGroup
         ? {
             id: getSenderMessage(msg, wbot),
@@ -392,7 +392,7 @@ const verifyContact = async (msgContact, wbot, companyId) => {
     }
     const contactData = {
         name: msgContact?.name || msgContact.id.replace(/\D/g, ""),
-        number: msgContact.id.replace(/\D/g, ""),
+        number: msgContact.id.replace(/[a-zA-Z]|[@]|[.]/g, ""),
         profilePicUrl,
         isGroup: msgContact.id.includes("g.us"),
         companyId,
@@ -1633,7 +1633,7 @@ const handleMsgAck = async (msg, chat) => {
 };
 const verifyRecentCampaign = async (message, companyId) => {
     if (!message.key.fromMe) {
-        const number = message.key.remoteJid.replace(/\D/g, "");
+        const number = message.key.remoteJid.replace(/[a-zA-Z]|[@]|[.]/g, "");
         const campaigns = await Campaign_1.default.findAll({
             where: { companyId, status: "EM_ANDAMENTO", confirmation: true },
         });

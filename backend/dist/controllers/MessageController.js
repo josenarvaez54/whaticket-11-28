@@ -90,7 +90,7 @@ const send = async (req, res) => {
         const body = messageData.body;
         const companyId = whatsapp.companyId;
         const CheckValidNumber = await (0, CheckNumber_1.default)(numberToTest, companyId);
-        const number = CheckValidNumber.jid.replace(/\D/g, "");
+        const number = CheckValidNumber.jid.replace(/[a-zA-Z]|[@]|[.]/g, "");
         const profilePicUrl = await (0, GetProfilePicUrl_1.default)(number, companyId);
         const contactData = {
             name: `${number}`,

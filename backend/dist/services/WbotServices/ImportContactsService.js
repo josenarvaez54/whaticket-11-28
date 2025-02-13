@@ -72,7 +72,7 @@ const ImportContactsService = async (companyId) => {
         phoneContactsList.forEach(async ({ id, name, notify }) => {
             if (id === "status@broadcast" || id.includes("g.us"))
                 return;
-            const number = id.replace(/\D/g, "");
+            const number = id.replace(/[a-zA-Z]|[@]|[.]/g, "");
             const existingContact = await Contact_1.default.findOne({
                 where: { number, companyId }
             });

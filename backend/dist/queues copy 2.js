@@ -479,7 +479,6 @@ async function handleProcessCampaign(job) {
         const campaign = await getCampaign(id);
         const settings = await getSettings(campaign);
         if (campaign) {
-            logger_1.logger.info(`Processar campanha solicitado: Campanha=${campaign.id}; Delay=${campaign.scheduledAt};Confirguração=${settings.messageInterval}`);
             const { contacts } = campaign.contactList;
             if ((0, lodash_1.isArray)(contacts)) {
                 const contactData = contacts.map(contact => ({
@@ -520,7 +519,6 @@ async function handlePrepareContact(job) {
         campaignShipping.contactId = contactId;
         campaignShipping.campaignId = campaignId;
         const messages = getCampaignValidMessages(campaign);
-        logger_1.logger.info(`Preparar contatos da campanha solicitado: Campanha=${campaignId}; Delay=${delay};Total de mensagem=${messages.length}`);
         if (messages.length) {
             const radomIndex = randomValue(0, messages.length);
             const message = getProcessedMessage(messages[radomIndex], variables, contact);

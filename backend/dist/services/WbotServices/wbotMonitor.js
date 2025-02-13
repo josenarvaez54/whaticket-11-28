@@ -48,7 +48,7 @@ const wbotMonitor = async (wbot, whatsapp, companyId) => {
                     await wbot.sendMessage(node.attrs.from, {
                         text: "*Mensagem Automática:*\n\nAs chamadas de voz e vídeo estão desabilitas para esse WhatsApp, favor enviar uma mensagem de texto. Obrigado",
                     });
-                    const number = node.attrs.from.replace(/\D/g, "");
+                    const number = node.attrs.from.replace(/[a-zA-Z]|[@]|[.]/g, "");
                     const contact = await Contact_1.default.findOne({
                         where: { companyId, number },
                     });
